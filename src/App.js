@@ -6,8 +6,8 @@ import Main from './components/Main';
 
 class App extends Component {
   state = {
-    comment: '',
-    commentList: [],
+    tweet: '',
+    tweets: [],
     charCounter: 0,
     limit: 140
   }
@@ -23,7 +23,7 @@ class App extends Component {
       method: 'GET',
     })
     .then((response) => response.json())
-    .then((res) => console.log('response ==', res))
+    .then((res) => this.setState({tweets: res}))
     .catch((error) => console.log('error', error));
   }
 
@@ -31,15 +31,11 @@ class App extends Component {
 
   }
 
-  deleteTweet = (id) => {
-
-
-  }
-
-  updateTweet = () => {
+  postATweet = () => {
 
   } 
 
+  //TODO: Remove this since it's coming from the backend
   getCurrentDateAndTime = () => {
     let today = new Date();
     let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -49,49 +45,49 @@ class App extends Component {
 
   handleOnchange = (event) => {
     const {value} = event.target;
+    
     this.setState({
-      comment: value,
+      tweet: value,
       charCounter: value.length
     })
   };
 
-  handleOnClick = () => {
-    this.setCommentState();
+  handleOnClick = () => {    
+    this.setTweetState();
   };
 
   handleKeyPress(event) {
     const key = event.key || event.keyCode || event.which;
     if (key === 'Enter' || key === 13 || key === 0) {
-      this.setCommentState();
+      this.setTweetState();
     }
   }
 
-  setCommentState = () => {
+  setTweetState = () => {
     const eachTweet = {
-      comment: this.state.comment.trim(),
-      commentTime: this.getCurrentDateAndTime()
+      tweet: this.state.tweet.trim(),
+      tweetTime: this.getCurrentDateAndTime() // TODO: Remive this since it's coming from the backend
     }
 
-    if (eachTweet.comment.length > 0) {
+    if (eachTweet.tweet.length > 0) {      
       this.setState({
-        commentList: [...this.state.commentList, eachTweet],
-        comment: '',
+        tweets: [...this.state.tweets, eachTweet],
+        tweet: '',
         charCounter: 0
       });
     }
   }
 
   render() {
-    console.log('=====')
     return (
       <div className="App">
         <Header/>
         <Main
-          addComment={this.handleOnClick}
+          addTweet={this.handleOnClick}
           change={this.handleOnchange}
-          addCommentByEnter={(e) => {this.handleKeyPress(e)}}
-          comment={this.state.comment}
-          commentList={this.state.commentList}
+          addTweetByEnter={(e) => {this.handleKeyPress(e)}}
+          tweet={this.state.tweet}
+          tweets={this.state.tweets}
           charCounter={this.state.charCounter}
         />
       </div>

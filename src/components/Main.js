@@ -1,46 +1,45 @@
 import React from 'react';
 
 const Main = ({
-    addComment,
+    addTweet,
     change,
-    comment,
-    commentList,
+    tweet,
+    tweets,
     charCounter,
-    addCommentByEnter
+    addTweetByEnter
 }) => {
 
-    const showComment = commentList.map((tweet, index) => {
-
+    const showTweet = tweets.map((tweet, index) => {
         return (
-        <div className="comment" key={index}>
-                <p>{tweet.comment}</p>
-                <span className="commentTimeAdded">{tweet.commentTime}</span>
+        <div className="tweet" key={index}>
+                <p>{tweet.tweet}</p>
+                <span className="tweetTimeAdded">{tweet.tweetTime}</span>
             </div>
         )
     });
 
     return(
         <main>
-            <div className="commentForm">
+            <div className="tweetForm">
                 <span className='title'>
                 What's on your mind?
                 </span>
                 <textarea className="textarea"
                     onChange={change}
-                    onKeyPress={addCommentByEnter}
-                    value={comment}
+                    onKeyPress={addTweetByEnter}
+                    value={tweet}
                     maxLength='140'>
                 </textarea>
 
-                <div className="commentSaving">
+                <div className="tweetSaving">
                     <span className='counter'> {charCounter}/140 </span>
                     <span className='saveButton'>
-                        <button onClick={addComment}>Save</button>
+                        <button onClick={addTweet}>Save</button>
                     </span>
                 </div>
 
-                <div id='commentsContainer'>
-                    {showComment}
+                <div id='tweetsContainer'>
+                    {showTweet}
                 </div>
             </div>
         </main>

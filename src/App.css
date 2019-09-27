@@ -36,11 +36,11 @@ body, html {
    border: 0;
 }
 
-#commentsContainer {
+#tweetsContainer {
    margin-top: 50px;
 }
 
-.comment {
+.tweet {
    height: 75px;
    margin-top: 30px;
    padding: 10px;
@@ -52,11 +52,11 @@ body, html {
    background-image: linear-gradient(white , grey);
 }
 
-.comment p {
+.tweet p {
    width: 100%;
 }
 
-.commentTimeAdded {
+.tweetTimeAdded {
    float: right;
    /* margin-top: 15px; */
    font-size: 12px;
@@ -81,7 +81,7 @@ body, html {
    color: white;
 }
 
-.commentForm{
+.tweetForm{
    width: 60%;
     height: 50%;
     margin: 0 auto;
@@ -90,7 +90,7 @@ body, html {
     border: 1px solid black;
 }
 
-.postComment{
+.posttweet{
    display: inline;
    margin-left: 20px;
 }
