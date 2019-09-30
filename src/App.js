@@ -4,6 +4,9 @@ import './App.css';
 import Header from './components/Header';
 import Main from './components/Main';
 
+const GET_TWEETS_URL = 'http://localhost:8080/nolla/tweets';
+const POST_TWEET_URL = 'http://localhost:8080/nolla/tweet';
+
 class App extends Component {
   state = {
     tweet: '',
@@ -17,9 +20,8 @@ class App extends Component {
   }
 
    getAllTweets = async () => {
-    const url = 'http://localhost:8080/nolla/tweets';
     
-    fetch(url, {
+    fetch(GET_TWEETS_URL, {
       method: 'GET',
     })
     .then((response) => response.json())
@@ -27,20 +29,24 @@ class App extends Component {
     .catch((error) => console.log('error', error));
   }
 
-  getOneTweet = () => {
-
+  resetTweet = () => {
+    this.setState({
+      tweet: '',
+      charCounter: 0
+    })
   }
-
   postATweet = () => {
+    const { tweet: message } = this.state;
+    const data = { message };
 
-  } 
-
-  //TODO: Remove this since it's coming from the backend
-  getCurrentDateAndTime = () => {
-    let today = new Date();
-    let date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    let time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    return date+' '+time;
+    fetch(POST_TWEET_URL, {
+      method: 'POST',
+      contentType: 'application/json',
+      body: JSON.stringify(data)
+    })
+    .then((response) => response.json())
+    .then((res) => this.resetTweet())
+    .catch((error) => this.resetTweet());
   }
 
   handleOnchange = (event) => {
@@ -53,28 +59,13 @@ class App extends Component {
   };
 
   handleOnClick = () => {    
-    this.setTweetState();
+    this.postATweet();
   };
 
   handleKeyPress(event) {
     const key = event.key || event.keyCode || event.which;
     if (key === 'Enter' || key === 13 || key === 0) {
-      this.setTweetState();
-    }
-  }
-
-  setTweetState = () => {
-    const eachTweet = {
-      tweet: this.state.tweet.trim(),
-      tweetTime: this.getCurrentDateAndTime() // TODO: Remive this since it's coming from the backend
-    }
-
-    if (eachTweet.tweet.length > 0) {      
-      this.setState({
-        tweets: [...this.state.tweets, eachTweet],
-        tweet: '',
-        charCounter: 0
-      });
+      this.postATweet();
     }
   }
 

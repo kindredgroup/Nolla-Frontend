@@ -9,11 +9,11 @@ const Main = ({
     addTweetByEnter
 }) => {
 
-    const showTweet = tweets.map((tweet, index) => {
+    const showTweet = tweets && tweets.map((tweet, index) => {
         return (
         <div className="tweet" key={index}>
-                <p>{tweet.tweet}</p>
-                <span className="tweetTimeAdded">{tweet.tweetTime}</span>
+                <p>{tweet.message}</p>
+                <span className="tweetTimeAdded">{tweet.created}</span>
             </div>
         )
     });
